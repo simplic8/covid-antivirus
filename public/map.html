@@ -338,30 +338,51 @@
             // generate x tweet/fireworks locations            
             firework_locations = [];
             fireworks_maxSize = 100;
-            fireworks_minSize = 30;
+            fireworks_minSize = 20;
 
             // read CSV simulated by reading from a predefined file - geoDataArray
             
-            // randomize post size between 1 to 10000
+            // randomize post size between 1 to 1000000
             for(a=0;a<geoDataArray.length;a++) { 
-                geoDataArray[a].push(Math.floor(Math.random() * 10000) + 1);
+                geoDataArray[a].push(Math.floor(Math.random() * 1000000) + 1);                
             }
 
             // posts
-            japan = 500;
-            china = 10000;
-            usa = 500;
-            singapore = 100;
-            postMax = Math.max(geoDataArray);
-            postMin = Math.min(geoDataArray);
+//            japan = 500;
+//            china = 10000;
+//            usa = 500;
+//            singapore = 100;
+            //var arr = [[[1, 112.0],[2,5.12],[3,113.1],[4,33.6],[5,85.9],[6,219.9]]];
+            
+            var postColumn = [];
+            for(var i=0; i<geoDataArray.length; i++) {
+                postColumn.push(geoDataArray[i][4]);
+            }
+            console.log(postColumn);
+            
+            Array.prototype.max = function() {
+                return Math.max.apply(null, this);
+            };
+
+            Array.prototype.min = function() {
+                return Math.min.apply(null, this);
+            };            
+
+            postMax = postColumn.max();
+            postMin = postColumn.min();
 
             // Load fireworks across the world
-            for(a=0;a<geoDataArray.length;a++) {                
-                if((geoDataArray[a][4]/postMax*fireworks_maxSize) < fireworks_minSize)
-                    fireworks_size = geoDataArray[a][4]/postMax*fireworks_maxSize;
-                else
+            var fireworks_size;
+            for(a=0;a<geoDataArray.length;a++) {                              
+                //console.log(Math.floor(geoDataArray[a][4]/postMax*fireworks_maxSize)+1);
+                if((geoDataArray[a][4]/postMax*fireworks_maxSize) > fireworks_minSize) {
+                    fireworks_size = Math.floor(geoDataArray[a][4]/postMax*fireworks_maxSize)+1;
+                    firework_locations.push([geoDataArray[a][3],geoDataArray[a][1],geoDataArray[a][2], fireworks_size]);
+                } else {
                     fireworks_size = fireworks_minSize;
-                firework_locations.push([geoDataArray[a][3],geoDataArray[a][1],geoDataArray[a][2], fireworks_size]);
+                    firework_locations.push([geoDataArray[a][3],geoDataArray[a][1],geoDataArray[a][2], fireworks_size]);
+                }
+                //console.log(fireworks_size);                
             }
 
 /*
@@ -504,8 +525,7 @@
             map.setZoom(zoomValue);
             //alert("panned to " + newLat + " and " + newLng);            
 
-        }        
-
+        }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNXSa_NvbAVnvCLoTjt05yAPuPljgUNZg&callback=initMap"
     async defer></script>

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <title>Styled Maps - Night Mode</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
@@ -21,45 +21,338 @@
   <body>
     <div id="map"></div>
     <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      }
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=<!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0"></script>    
-    <meta charset="utf-8">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 36.32793045630267, lng: 138.198594259375},
-          zoom: 6
+        function initMap() {
+
+            // Styles a map in night mode.
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 36.32793045630267, lng: 138.198594259375},
+                zoom: 3.2,
+                minZoom: 3,
+                maxZoom: 6,
+                disableDefaultUI: true,
+                panControl: true,
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false,
+                gestureHandling: 'none',
+                styles: [
+                    {
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#212121"
+                        }
+                        ]
+                    },
+                    {
+                        "elementType": "labels",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.icon",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#757575"
+                        }
+                        ]
+                    },
+                    {
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                        {
+                            "color": "#212121"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#757575"
+                        },
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.country",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#9e9e9e"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.land_parcel",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.locality",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#bdbdbd"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "administrative.neighborhood",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "poi",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#757575"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#181818"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#616161"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "poi.park",
+                        "elementType": "labels.text.stroke",
+                        "stylers": [
+                        {
+                            "color": "#1b1b1b"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "geometry.fill",
+                        "stylers": [
+                        {
+                            "color": "#2c2c2c"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.icon",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#8a8a8a"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road.arterial",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#373737"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#3c3c3c"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road.highway.controlled_access",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#4e4e4e"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "road.local",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#616161"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "stylers": [
+                        {
+                            "visibility": "off"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "transit",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#757575"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "geometry",
+                        "stylers": [
+                        {
+                            "color": "#000000"
+                        }
+                        ]
+                    },
+                    {
+                        "featureType": "water",
+                        "elementType": "labels.text.fill",
+                        "stylers": [
+                        {
+                            "color": "#3d3d3d"
+                        }
+                        ]
+                    }
+                    ]
+            });
+
+/*
+            // generate x fireworks
+            x = 10;
+            cnt=0;
+            while (cnt<x) {
+                marker_lat = ;
+                marker_lng = ;
+                // init markers
+                var firework_icon = {
+                    url: "https://i.gifer.com/VZvx.gif",
+                    scaledSize: new google.maps.Size(20, 20),
+                    origin: new google.maps.Point(0,0),
+                    anchor: new google.maps.Point(0, 0)
+                };
+                
+                var fireworkMarkers = [];
+                fireworkMarkers[cnt] = new google.maps.Marker({
+                    position: {lat: marker_lat, lng: marker_lng},
+                    map: map,
+                    icon: firework_icon
+                });
+
+                cnt++;
+            }
+*/
+            // generate x tweet/fireworks locations
+            x = 50;
+            cnt = 0;
+            firework_locations = [];
+
+            while (cnt<x) {
+                firework_locations.push(['Title', 36.32 + (Math.random()), 138.19 + (Math.random()), cnt+1]);
+                cnt++;
+            }            
+
+            var markers = [], i;
+
+            for (i = 0; i < firework_locations.length; i++) {  
+                createFireworkMarker(firework_locations[i][0], firework_locations[i][1], firework_locations[i][2], i, map, markers, i * 500);
+            }
+
         }
-      }
+
+        function createFireworkMarker(firework_locations_title, firework_location_lat, firework_location_lng, i, map, markers, timeout) {
+
+            var firework_icon;
+
+            if (i%2==0) {
+                firework_icon = {
+                        url: "img/firework1.gif",
+                        scaledSize: new google.maps.Size(5, 5),
+                        origin: new google.maps.Point(0,0),
+                        anchor: new google.maps.Point(0,0)
+                    };
+            } else {
+                firework_icon = {
+                        url: "img/firework2.gif",
+                        scaledSize: new google.maps.Size(20, 20),
+                        origin: new google.maps.Point(0,0),
+                        anchor: new google.maps.Point(0,0)
+                    };
+            }
+            
+            window.setTimeout(function () {                
+                markers.push(new google.maps.Marker( {
+                    position: new google.maps.LatLng(firework_location_lat, firework_location_lng),
+                    map: map,
+                    icon: firework_icon,
+                }));
+
+            }, timeout);
+
+        }
+
     </script>
-    <script src="https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyBswetXme7nn3eiqWWcUwQQQrjg0b4ZUZo&callback=initMap" async defer ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNXSa_NvbAVnvCLoTjt05yAPuPljgUNZg&callback=initMap"
+    async defer></script>
   </body>
 </html>

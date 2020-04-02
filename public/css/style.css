@@ -73,6 +73,43 @@ body, html{
   background-color:transparent;
 }
 
+/*
+.selectCountryClass {
+  border: 2px solid #333;
+  background-color: #999999;
+  width: 265px;
+  font-size: 1em;
+}
+*/
+
+.ddbar {
+  position:absolute;
+  /* Firefox */
+  top: -moz-calc(65% + 60px);
+  /* WebKit */
+  top: -webkit-calc(65%+ 60px);
+  /* Opera */
+  top: -o-calc(65% + 60px);
+  /* Standard */
+  top: calc(65% + 60px);
+  width:100%;
+  text-align:center;
+  color:#000;
+  font-size:27px;
+  letter-spacing:8px;
+  text-transform:uppercase;
+}
+
+.ddbar .border{
+  background-color:#111;
+  color:#fff;
+  padding:20px;
+}
+
+.ddbar .border.trans{
+  background-color:transparent;
+}
+
 .ptext{
   position:absolute;
   top:50%;
@@ -83,6 +120,7 @@ body, html{
   letter-spacing:8px;
   text-transform:uppercase;
 }
+
 
 .ptext .border{
   background-color:#111;

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/style.css">
     <title>Styled Maps - Night Mode</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -16,27 +17,59 @@
         margin: 0;
         padding: 0;
       }
-    </style>
-  </head>
+
+    .selectCountryClass {
+        border: 2px solid #333;
+        background-color: rgba(100,100,100,0.5);
+        width: 265px;
+        font-size: 0.5 em;
+        color: #fff;
+    }
+
+    </style>    
+  </head>  
   <body>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.1/papaparse.min.js"></script>
+    <script src="country_geodata.js"></script>
+
     <div id="map"></div>
-    <script>
+    <div class="ddbar">
+        <span class="border trans" style="font-size:1em">
+            <select id="countries" class="selectCountryClass" id="country-list" onChange="panToMap()">
+                <option value="Global">Global</option>
+                <option value="North Asia">North Asia</option>
+                <option value="SEAsiaPac">South-East Asia / Asia-Pacific</option>
+                <option value="Central Asia">Central Asia</option>
+                <option value="Middle East/South Asia">Middle East / South Asia</option>
+                <option value="North America">North America</option>
+                <option value="Latin/Central America">Latin / Central America</option>
+                <option value="Europe">Europe</option>
+                <option value="Africa">Africa</option>
+            </select>
+        </span>
+    </div>
+
+    <script>        
+        //var map = new google.maps.Map(document.getElementById('map'));        
+
         function initMap() {
 
             // Styles a map in night mode.
-            var map = new google.maps.Map(document.getElementById('map'), {
-                center: {lat: 36.32793045630267, lng: 138.198594259375},
-                zoom: 3.2,
-                minZoom: 3,
-                maxZoom: 6,
-                disableDefaultUI: true,
-                panControl: true,
-                mapTypeControl: false,
-                scaleControl: false,
-                streetViewControl: false,
-                rotateControl: false,
-                fullscreenControl: false,
-                gestureHandling: 'none',
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 36.32793045630267, lng: 138.198594259375},
+            zoom: 3.2,
+            minZoom: 3,
+            maxZoom: 6,                
+            //disableDefaultUI: true,
+            panControl: true,
+            mapTypeControl: false,
+            scaleControl: false,
+            streetViewControl: false,
+            rotateControl: false,
+            fullscreenControl: false,
+            //gestureHandling: 'none',
                 styles: [
                     {
                         "elementType": "geometry",
@@ -302,41 +335,98 @@
                 cnt++;
             }
 */
-            // generate x tweet/fireworks locations
-            x = 50;
-            cnt = 0;
+            // generate x tweet/fireworks locations            
             firework_locations = [];
+            fireworks_maxSize = 100;
+            fireworks_minSize = 30;
 
-            while (cnt<x) {
-                firework_locations.push(['Title', 36.32 + (Math.random()), 138.19 + (Math.random()), cnt+1]);
-                cnt++;
-            }            
+            // read CSV simulated by reading from a predefined file - geoDataArray
+            
+            // randomize post size between 1 to 10000
+            for(a=0;a<geoDataArray.length;a++) { 
+                geoDataArray[a].push(Math.floor(Math.random() * 10000) + 1);
+            }
+
+            // posts
+            japan = 500;
+            china = 10000;
+            usa = 500;
+            singapore = 100;
+            postMax = Math.max(geoDataArray);
+            postMin = Math.min(geoDataArray);
+
+            // Load fireworks across the world
+            for(a=0;a<geoDataArray.length;a++) {                
+                if((geoDataArray[a][4]/postMax*fireworks_maxSize) < fireworks_minSize)
+                    fireworks_size = geoDataArray[a][4]/postMax*fireworks_maxSize;
+                else
+                    fireworks_size = fireworks_minSize;
+                firework_locations.push([geoDataArray[a][3],geoDataArray[a][1],geoDataArray[a][2], fireworks_size]);
+            }
+
+/*
+            // Japan
+            jpLat = 36.204824;
+            jpLng = 138.252924;
+            if((japan/postMax*fireworks_maxSize) < fireworks_minSize)
+                fireworks_size = japan/postMax*fireworks_maxSize;
+            else
+                fireworks_size = fireworks_minSize;
+            firework_locations.push(['Title', jpLat + (Math.random()), jpLng + (Math.random()),fireworks_size]);
+
+            // China
+            cnLat = 35.86166;
+            cnLng = 104.195397;            
+            if((china/postMax*fireworks_maxSize) < fireworks_minSize)
+                fireworks_size = china/postMax*fireworks_maxSize;
+            else
+                fireworks_size = fireworks_minSize;
+            firework_locations.push(['Title', cnLat + (Math.random()), cnLng + (Math.random()),fireworks_size]);            
+
+            // USA            
+            usLat = 37.09024
+            usLng = -95.712891
+            if((usa/postMax*fireworks_maxSize) < fireworks_minSize)
+                fireworks_size = usa/postMax*fireworks_maxSize;
+            else
+                fireworks_size = fireworks_minSize;            
+            firework_locations.push(['Title', usLat + (Math.random()), usLng + (Math.random()), fireworks_size]);
+
+            //Singapore            
+            sgLat = 1.352083;
+            sgLng = 103.81983;
+            if((singapore/postMax*fireworks_maxSize) < fireworks_minSize)
+                fireworks_size = singapore/postMax*fireworks_maxSize;
+            else
+                fireworks_size = fireworks_minSize;
+            firework_locations.push(['Singapore', sgLat + (Math.random()), sgLng + (Math.random()), fireworks_size]);
+*/
 
             var markers = [], i;
-
+            
             for (i = 0; i < firework_locations.length; i++) {  
-                createFireworkMarker(firework_locations[i][0], firework_locations[i][1], firework_locations[i][2], i, map, markers, i * 500);
+                createFireworkMarker(firework_locations[i][0], firework_locations[i][1], firework_locations[i][2], i, map, markers, i * 50, firework_locations[i][3]);
             }
 
         }
 
-        function createFireworkMarker(firework_locations_title, firework_location_lat, firework_location_lng, i, map, markers, timeout) {
+        function createFireworkMarker(firework_locations_title, firework_location_lat, firework_location_lng, i, map, markers, timeout, firework_size) {
 
             var firework_icon;
 
             if (i%2==0) {
                 firework_icon = {
                         url: "img/firework1.gif",
-                        scaledSize: new google.maps.Size(5, 5),
+                        scaledSize: new google.maps.Size(firework_size, firework_size),
                         origin: new google.maps.Point(0,0),
-                        anchor: new google.maps.Point(0,0)
+                        anchor: new google.maps.Point(10,10)
                     };
             } else {
                 firework_icon = {
                         url: "img/firework2.gif",
-                        scaledSize: new google.maps.Size(20, 20),
+                        scaledSize: new google.maps.Size(firework_size, firework_size),
                         origin: new google.maps.Point(0,0),
-                        anchor: new google.maps.Point(0,0)
+                        anchor: new google.maps.Point(10,10)
                     };
             }
             
@@ -350,6 +440,71 @@
             }, timeout);
 
         }
+
+        function panToMap() {
+            
+            map =  this.map; // google.maps.Map(document.getElementById('map'));
+            
+            var latLng = new google.maps.LatLng(newLat, newLng);
+
+            var newLat, newLng, zoomValue;
+            countrySelected = document.getElementById('countries').value;
+
+            if(countrySelected == "Global") {                
+                //newLat = 31.778689;
+                //newLng = 35.218934;
+                newLat = 36.32793045630267;
+                newLng = 138.198594259375;
+                zoomValue = 3.5;
+            } else if (countrySelected == "North Asia") {
+                newLat = 35.731243;
+                newLng = 110.6524033;
+                zoomValue = 3.9;    
+            } else if (countrySelected == "SEAsiaPac") {
+                newLat = 10.342982;
+                newLng = 113.8193283;
+                zoomValue = 5;
+            } else if (countrySelected == "North America") {
+                newLat = 45.335293;
+                newLng = -90.759604;
+                zoomValue = 4.3;
+            } else if (countrySelected == "Central/Latin America") {
+                newLat = -4.556917;
+                newLng = -65.411224;
+                zoomValue = 4.1;
+            } else if (countrySelected == "Europe") {
+                newLat = 48.311958;
+                newLng = 14.448882;
+                zoomValue = 4.2;
+            } else if (countrySelected == "Middle East/South Asia") {
+                newLat = 27.849395;
+                newLng = 62.213714;
+                zoomValue = 4.4;
+            } else if (countrySelected == "Africa") {
+                newLat = 9.850306;
+                newLng = 21.425672;
+                zoomValue = 3.5;
+            } else if (countrySelected == "Latin/Central America") {
+                newLat = -4.879954;
+                newLng = -65.375118;
+                zoomValue = 3.6;
+            } else if (countrySelected == "Central Asia") {
+                newLat = 42.816841;
+                newLng = 75.298202;
+                zoomValue = 4;                    
+            } else {
+                newLat = 36.32793045630267;
+                newLng = 138.198594259375;
+                zoomValue = 4;
+            }
+
+            var latLng = new google.maps.LatLng(newLat, newLng);
+            map.panTo(latLng);
+            map.setCenter(latLng);
+            map.setZoom(zoomValue);
+            //alert("panned to " + newLat + " and " + newLng);            
+
+        }        
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCNXSa_NvbAVnvCLoTjt05yAPuPljgUNZg&callback=initMap"

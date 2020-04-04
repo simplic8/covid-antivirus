@@ -56,13 +56,13 @@ body, html{
 .ptextmainframe {
   position:absolute;  
   /* Firefox */
-  top: -moz-calc(40% + 90px);
+  top: -moz-calc(30% + 90px);
   /* WebKit */
-  top: -webkit-calc(40% + 90px);
+  top: -webkit-calc(30% + 90px);
   /* Opera */
-  top: -o-calc(40% + 90px);
+  top: -o-calc(30% + 90px);
   /* Standard */
-  top: calc(40% + 90px);
+  top: calc(30% + 90px);
   width:100%;  
   text-align:center;
   color:#000;
@@ -115,13 +115,13 @@ body, html{
 .ddbar {
   position:absolute;
   /* Firefox */
-  top: -moz-calc(40% + 400px);
+  top: -moz-calc(30% + 400px);
   /* WebKit */
-  top: -webkit-calc(40% + 400px);
+  top: -webkit-calc(30% + 400px);
   /* Opera */
-  top: -o-calc(40% + 400px);
+  top: -o-calc(30% + 400px);
   /* Standard */
-  top: calc(40% + 400px);
+  top: calc(30% + 400px);
   width:100%;
   text-align:center;
   color:#000;
@@ -143,13 +143,13 @@ body, html{
 .scoreboardframe {
   position:absolute;  
   /* Firefox */
-  top: -moz-calc(40% + 1px);
+  top: -moz-calc(30% + 1px);
   /* WebKit */
-  top: -webkit-calc(40% + 200px);
+  top: -webkit-calc(30% + 200px);
   /* Opera */
-  top: -o-calc(40% + 1px);
+  top: -o-calc(30% + 1px);
   /* Standard */
-  top: calc(40% + 140px);
+  top: calc(30% + 140px);
   width:100%;
   height: 200px;
   text-align:center;

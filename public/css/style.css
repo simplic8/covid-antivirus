@@ -52,24 +52,54 @@ body, html{
   color:#ddd;
 }
 
-.ptextmain {
+
+.ptextmainframe {
+  position:absolute;  
+  /* Firefox */
+  top: -moz-calc(40% + 90px);
+  /* WebKit */
+  top: -webkit-calc(40% + 90px);
+  /* Opera */
+  top: -o-calc(40% + 90px);
+  /* Standard */
+  top: calc(40% + 90px);
+  width:100%;  
+  text-align:center;
+  color:#000;
+  font-size:0.8em;
+  letter-spacing:0.5em;
+  text-transform:uppercase;  
+}
+
+.ptextmain {  
+  display: inline-block;
+  width: 261px;
+  height: 250px;
+  line-height:1em;  
+/*  
   position:absolute;
-  top:65%;
+  top: -moz-calc(40% + 100px);
+  top: -webkit-calc(40% + 100px);
+  top: -o-calc(40% + 100px);
+  top: calc(40% + 100px);
   width:100%;
   text-align:center;
   color:#000;
-  font-size:27px;
-  letter-spacing:8px;
+  font-size:0.8em;
+  letter-spacing:6px;
   text-transform:uppercase;
+*/
 }
 
 .ptextmain .border{
+  width:261px;
   background-color:#111;
   color:#fff;
   padding:20px;
 }
 
 .ptextmain .border.trans{
+  width: 261px;
   background-color:transparent;
 }
 
@@ -85,13 +115,13 @@ body, html{
 .ddbar {
   position:absolute;
   /* Firefox */
-  top: -moz-calc(65% + 60px);
+  top: -moz-calc(40% + 400px);
   /* WebKit */
-  top: -webkit-calc(65%+ 60px);
+  top: -webkit-calc(40% + 400px);
   /* Opera */
-  top: -o-calc(65% + 60px);
+  top: -o-calc(40% + 400px);
   /* Standard */
-  top: calc(65% + 60px);
+  top: calc(40% + 400px);
   width:100%;
   text-align:center;
   color:#000;
@@ -108,6 +138,80 @@ body, html{
 
 .ddbar .border.trans{
   background-color:transparent;
+}
+
+.scoreboardframe {
+  position:absolute;  
+  /* Firefox */
+  top: -moz-calc(40% + 1px);
+  /* WebKit */
+  top: -webkit-calc(40% + 200px);
+  /* Opera */
+  top: -o-calc(40% + 1px);
+  /* Standard */
+  top: calc(40% + 140px);
+  width:100%;
+  height: 200px;
+  text-align:center;
+  color:#000;
+  font-size:27px;
+  letter-spacing:8px;
+  text-transform:uppercase;  
+}
+
+.scoreboardframe .border{
+  background-color: #000;;
+  color:#fff;
+  padding:20px;
+}
+
+.scoreboardframe .border.trans{
+  background-color:transparent;
+}
+
+.scoreboard {
+  overflow:hidden;
+  display: inline-block;
+  border: 1px solid #333;
+  width: 261px;
+  height: 250px;
+  font-size: 0.6em;
+  letter-spacing:0px;
+  text-transform:none;  
+  text-align:left;
+  line-height:1em;
+  font-family: 'Courier New', Courier, monospace;  
+  margin: 5px;
+  z-index: 9999;
+}
+
+.scoreboard p {
+  padding: 5px;
+}
+
+.scoreboard a:link {
+  color: #999;
+} 
+
+.scoreboard a:visited {
+  color: #999;
+} 
+
+.scoreboard a:hover {
+  color: #fff;
+} 
+
+.scoreboard a:active {
+  color: #333;
+} 
+
+.scoreboard iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
 }
 
 .ptext{

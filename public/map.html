@@ -26,15 +26,21 @@
         color: #fff;
     }
 
-    </style>    
+    </style>
   </head>  
   <body>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
     <script data-require="jquery@3.1.1" data-semver="3.1.1" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.1/papaparse.min.js"></script>
-    <script src="country_geodata.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.6.1/papaparse.min.js"></script>    
+    <script async src="https://www.instagram.com/static/bundles/es6/EmbedSDK.js/bf4a12bd69f3.js"></script>
+    <script src="country_geodata.js"></script>    
 
     <div id="map"></div>
+    <div class="scoreboardframe" id="scoreboardframe">
+        <span class="border trans">
+            <div id="scoreboard" class="scoreboard"></div>
+        </span>
+    </div>
     <div class="ddbar">
         <span class="border trans" style="font-size:1em">
             <select id="countries" class="selectCountryClass" id="country-list" onChange="panToMap()">
@@ -51,10 +57,60 @@
         </span>
     </div>
 
+    <script>
+        var recentPostId = 0;
+        var counterPosts = 0;                
+        SearchHashtag();
+        setInterval(function() { SearchHashtag()}, 8000);
+
+        function SearchHashtag() {
+            
+//            divHTML = "<p><b>merv_lee</b><br>This is a sample post #" + counterPosts + "<br><a href='https://www.instagram.com/p/B-j4dzkh1dn/' style='/font-color:#fff'>View post</a></p>";
+//            document.getElementById("scoreboard").innerHTML = divHTML + document.getElementById("scoreboard").innerHTML;            
+//            counterPosts++;
+            if(counterPosts < 4) {
+                console.log(recentPostId, counterPosts);
+                $(".post").empty();
+                var accesstoken = "EAAITtfwO1igBAGpUbpR9hp5ZAmluf2iXnkxUJkMGEGEd7N517jhoW3mgcBMphZApGFPRnXY8SoHA5ZCTyxLCx1wIsZBaG122TP84ZB2DOwS6paTB4Xp7I93OCdVZBnmXovGsUPaPZBZAoSronEhohoXAZAPl8Sc8c3aO1TvchWsbkjQZDZD";
+                var count = 0;
+                var hashtag = "covidantibody";
+                var maxCaptionLength = 100;
+                var maxAuthorNameLength = 40;
+                var authorName, caption, permalink, postId
+                // search for the #hastag id
+                var hashtag = $.getJSON("https://graph.facebook.com/ig_hashtag_search?user_id=17841401937575986&q=" + hashtag + "&access_token=" + accesstoken, function (data) {
+                    // search for all the media ids thats related to the hashtag
+                    var data = $.getJSON("https://graph.facebook.com/" + data.data[0].id + "/recent_media?user_id=17841401937575986&access_token=" + accesstoken + "&fields=id,media_type,media_url,like_count,comments_count,caption,permalink", function (data) {                    
+                        postId = data.data[0].id;
+                        caption = data.data[0].caption;
+                        permalink = data.data[0].permalink;
+                        if(caption.length > maxCaptionLength) 
+                            caption = caption.substring(0,maxCaptionLength) + "...";
+    //                    console.log(caption);
+                        // return the data for specific media related to the hashtag                    
+                        var data = $.getJSON("https://api.instagram.com/oembed/?url=" + data.data[0].permalink, function (data) {
+                            authorName = data.author_name;
+                            if(authorName.length > maxAuthorNameLength)
+                                authorName = authorName.substring(0,maxAuthorNameLength) + "...";
+                                if(postId != recentPostId) {
+                                    var divHTML = "<p><b>" + authorName + "</b><br>" + caption + "<br>" + "<a href='" + permalink + "'>View post</a></p>";
+                                    console.log(divHTML);
+                                    document.getElementById("scoreboard").innerHTML = divHTML + document.getElementById("scoreboard").innerHTML;
+                                    recentPostId = postId;
+                                }
+                                counterPosts++;                     
+    //                        console.log(data.author_name);                    
+                        });
+                    });           
+                });
+            }
+        }
+    </script>
+
     <script>        
         //var map = new google.maps.Map(document.getElementById('map'));        
 
-        function initMap() {
+        function initMap() {            
 
             // Styles a map in night mode.
             map = new google.maps.Map(document.getElementById('map'), {
@@ -62,14 +118,14 @@
             zoom: 3.2,
             minZoom: 3,
             maxZoom: 6,                
-            //disableDefaultUI: true,
+            disableDefaultUI: true,
             panControl: true,
             mapTypeControl: false,
             scaleControl: false,
             streetViewControl: false,
             rotateControl: false,
             fullscreenControl: false,
-            //gestureHandling: 'none',
+            gestureHandling: 'none',
                 styles: [
                     {
                         "elementType": "geometry",

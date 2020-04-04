@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script async src="https://www.instagram.com/static/bundles/es6/EmbedSDK.js/bf4a12bd69f3.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="container">
+        <button onclick="SearchHashtag()">Click Me</button>
+        <div class="post">
+
+        </div>
+    </div>
+</body>
+<script>
+    function SearchHashtag() {
+        $(".post").empty();
+        var accesstoken = "EAAITtfwO1igBABYn1p2F6N6fRfr02smWIbXTFy98aKsLbrZCUWIWj9lH7FDcJWxXe9ABp7ct9VyR0f0WlxKDuQURsUgKi7yvlVCJq9gJpcZCOhP54ZAKyrYOM0ZCT5R0ZAvamoxyYxBneczRqeZBGgUeQfyWrMagOdqLZA9NeMNGNqwSSKCaGZAXgrnBZC7oVfTZAITE7FR06d8QZDZD";
+        var count = 0;
+        var hashtag = "covid";
+        var hashtag = $.getJSON("https://graph.facebook.com/ig_hashtag_search?user_id=17841401937575986&q=" + hashtag + "&access_token=" + accesstoken, function (data) {
+            var data = $.getJSON("https://graph.facebook.com/" + data.data[0].id + "/top_media?user_id=17841401937575986&access_token=" + accesstoken + "&fields=id,media_type,media_url,like_count,comments_count,caption,permalink", function (data) {
+                $.each(data.data, function (i, item) {
+                    if (count < 9) {
+                        var iframe = "<iframe src=\"" + item.permalink + "embed\" width=\"320\" height=\"400\" frameborder=\"0\" scrolling=\"no\" allowtransparency=\"true\"></iframe>";
+                        $(".post").append(iframe);
+                    }
+                    count++;
+                });
+                console.log(count);
+            });
+        });
+    };
+</script>
+
+</html>

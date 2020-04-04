@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -10,6 +11,10 @@
   integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <div id="fb-root"></div>
   <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <script src="https://kit.fontawesome.com/6443725a1d.js" crossorigin="anonymous"></script>  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script async src="https://www.instagram.com/static/bundles/es6/EmbedSDK.js/bf4a12bd69f3.js"></script>
   <style>
 
   html { font-size: 75%; scroll-behavior: smooth; }
@@ -121,19 +126,9 @@
 
   <a name="feed"></a>
   <section class="section section-light">
-    <h4>#Covid on Facebook</h4>
-    <div id="container" style="overflow-y:scroll;" height="800">
-      <div style="height:800px">
-        <div>
-          <iframe src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fboilingwatersph%2Fphotos%2Fa.990322237690131%2F2803581413030862%2F%3Ftype%3D3&width=500" width="500" height="715" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-          <!--
-            <iframe
-                src="https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2FNipponaesthetics%2Fposts%2F796912574146092"
-                height="600" style="border:none;overflow:auto" scrolling="auto" frameborder="0"
-                allowTransparency="true" allow="encrypted-media">
-            </iframe>
-          -->
-        </div>
+    <div class="container">
+      <div class="row justify-content-center">
+      </div>
     </div>
   </section>
   
@@ -147,9 +142,9 @@
 
   <a name="about"></a>
   <section class="section section-dark">
-    <h4>What is #covidantibody #covidab</h4>
+    <h4>What is #covidantibody</h4>
     <p>
-      We are a united antibody movement against Covid, inspired by a common vision - to spread words of encouragement in a grim world. Just like antibodies against viruses, we can use our words and actions to build up the immunity of the global community to fight against and neutralize the covid strain.
+      We are a united antibody movement against Covid, inspired by a common vision - to spread words of encouragement in a grim world. Just like antibodies against viruses, we can use our words and actions to build up the immunity of the global community to fight against and neutralize the covid strain. Be the spark to light up someone's life today - digitally!
     </p>
   </section>
 
@@ -171,6 +166,9 @@
       <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-hashtags="covidantibody" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
     </p>
     <p>
+      <a href="https://www.instagram.com/explore/tags/covidantibody/" ><img src="img/ig_follow.gif" height="20"/></a>
+    </p>
+    <p>
       In need of a listening ear? Chat with us by clicking on the link of any of the popular social media channels below:
     </p>
     <p>
@@ -179,9 +177,83 @@
   </section>
 
   <section class="section section-dark">
-    <h2>#CovidAntibody</h2>
+    <h2>#covidantibody</h2>
     <p>© Indigitous Singapore, 2020</p>
   </section>
 
+  <script>
+    $(document).ready(function () {
+      SearchHashtag()
+    });
+    var accesstoken = "EAAITtfwO1igBAGpUbpR9hp5ZAmluf2iXnkxUJkMGEGEd7N517jhoW3mgcBMphZApGFPRnXY8SoHA5ZCTyxLCx1wIsZBaG122TP84ZB2DOwS6paTB4Xp7I93OCdVZBnmXovGsUPaPZBZAoSronEhohoXAZAPl8Sc8c3aO1TvchWsbkjQZDZD";
+    var hashtagid = "";
+    function SearchHashtag() {
+      $(".post").empty();
+      var hashtag = "covidantibody";
+      try {
+        var hashtag = $.getJSON("https://graph.facebook.com/ig_hashtag_search?user_id=17841401937575986&q=" + hashtag + "&access_token=" + accesstoken, function (data) {
+  
+        }).done(function (data) {
+          SearchPost(data.data[0].id)
+        });
+  
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  
+    function SearchPost(data) {
+      try {
+        var list = [];
+        var data = $.getJSON("https://graph.facebook.com/" + data + "/recent_media?user_id=17841401937575986&access_token=" + accesstoken + "&fields=id,media_type,media_url,like_count,comments_count,caption,permalink", function (data) {
+        }).done(function (data) {
+          $.each(data.data, function (i, item) {
+            list.push(item);
+          });
+          LoadData(list);
+        })
+      } catch (e) {
+        console.log(e);
+      }
+  
+    }
+  
+    function LoadData(list) {
+      try {
+        var count = 0;
+        var string = "";
+        var card = "";
+        $.each(list, function (i, data) {
+          var data = $.getJSON("https://api.instagram.com/oembed?url=" + data.permalink, function (data) {
+            if (list[i].media_url != null && list[i].media_type == "IMAGE") {
+              if (count < 9) {
+                var img_url = String(list[i].media_url);
+                console.log(img_url);
+                card = "<div class=\"col-md-4 card-wrap\"+<div class=\"card\" style=\"width:20rem;\"><div class=\"card-title\" style=\"height:25px; margin-top:8px; margin-left:12px;\"><b>" + data.author_name + "</b></div>   <img class=\"card-img-top\" src=\"" + String(img_url) + "\"> <div class=\"card-body\"> <text class=\"card-title\"><i class=\"fas fa-heart\"></i> " + list[i].like_count + "&nbsp;&nbsp;&nbsp;<i class=\"fas fa-comment\"></i> " + list[i].comments_count + "</text><p>" + list[i].caption + "</p>  <a target=\"_blank\" href=\"" + list[i].permalink + "\">View More</a></div>                              </div></div></div>";
+                string += card;
+                count++;
+              }
+            }
+          }).done(function () {
+            $(".row").html(string);
+          });
+        })
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  
+    function jqSelector(str) {
+      return str.replace(/([;&,\.\+\*\~':"\!\^#$%@\[\]\(\)=>\|])/g, '\\$1');
+    }
+  </script>
+  <style>
+    .card-wrap {
+      background-color: white;
+      margin: 20px;
+      border-radius: 5px;
+    }
+  </style>
+  
 </body>
 </html>

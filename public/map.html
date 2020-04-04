@@ -89,7 +89,7 @@
     //                    console.log(caption);
                         // return the data for specific media related to the hashtag                    
                         var data = $.getJSON("https://api.instagram.com/oembed/?url=" + data.data[0].permalink, function (data) {
-                            authorName = data.author_name;
+                            authorName = data.author_name;                            
                             if(authorName.length > maxAuthorNameLength)
                                 authorName = authorName.substring(0,maxAuthorNameLength) + "...";
                                 if(postId != recentPostId) {
@@ -98,8 +98,8 @@
                                     document.getElementById("scoreboard").innerHTML = divHTML + document.getElementById("scoreboard").innerHTML;
                                     recentPostId = postId;
                                 }
-                                counterPosts++;                     
-    //                        console.log(data.author_name);                    
+                                counterPosts++;
+    //                        console.log(data.author_name);
                         });
                     });           
                 });
